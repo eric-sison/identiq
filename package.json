@@ -18,6 +18,7 @@
     "migration:drop": "drizzle-kit drop"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "@tanstack/react-query": "^5.84.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -27,12 +28,12 @@
     "next": "15.4.5",
     "next-themes": "^0.4.6",
     "pg": "^8.16.3",
+    "radix-ui": "latest",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.0.14",
-    "zustand": "^5.0.7",
-    "radix-ui": "latest"
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -54,7 +55,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.6",
-    "typescript": "^5.9.2",
+    "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   },
