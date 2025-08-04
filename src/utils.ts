@@ -1,5 +1,5 @@
 import z, { type ZodError } from "zod";
-import { EnvSchema } from "./constants";
+import { EnvSchema } from "./validators";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

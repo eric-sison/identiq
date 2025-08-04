@@ -24,16 +24,16 @@ export const clients = pgTable("oauth_clients", {
   applicationType: applicationTypeEnum("application_type").notNull(),
 
   // Authentication method for  token endpoint
-  tokenEndpointAuthMethod: tokenEndpointAuthMethodEnum("token_endpoint_auth_method")
-    .default("client_secret_basic")
-    .notNull(),
+  tokenEndpointAuthMethod: tokenEndpointAuthMethodEnum("token_endpoint_auth_method").default(
+    "client_secret_basic",
+  ),
 
   // Contact and metadata
   description: text("client_description"),
   uri: varchar("client_uri", { length: 500 }),
-  logoUri: varchar("logo_uri", { length: 500 }),
-  tosUri: varchar("tos_uri", { length: 500 }),
-  policyUri: varchar("policy_uri", { length: 500 }),
+  logoURI: varchar("logo_uri", { length: 500 }),
+  tosURI: varchar("tos_uri", { length: 500 }),
+  policyURI: varchar("policy_uri", { length: 500 }),
 
   // Administrative
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
@@ -51,7 +51,7 @@ export const clients = pgTable("oauth_clients", {
   accessTokenLifetime: integer("access_token_lifetime").default(3600), // 1 hour
   refreshTokenLifetime: integer("refresh_token_lifetime").default(2592000), // 30 days
   idTokenLifetime: integer("id_token_lifetime").default(3600), // 1 hour
-  authorizationCodeLifetime: integer("authorization_code_lifetime"), // 10 minutes
+  authorizationCodeLifetime: integer("authorization_code_lifetime").default(600), // 10 minutes
 });
 
 export const clientRedirectUris = pgTable(
@@ -63,11 +63,11 @@ export const clientRedirectUris = pgTable(
     clientId: varchar("client_id")
       .references(() => clients.id, { onDelete: "cascade" })
       .notNull(),
-    redirectUri: varchar("redirect_uri", { length: 2000 }),
+    redirectURI: varchar("redirect_uri", { length: 2000 }).notNull(),
     isPrimary: boolean("is_primary").default(false),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
   },
-  (t) => [unique("unique_client_uri").on(t.clientId, t.redirectUri)],
+  (t) => [unique("unique_client_uri").on(t.clientId, t.redirectURI)],
 );
 
 export const oauthScopes = pgTable("oauth_scopes", {
@@ -122,7 +122,7 @@ export const clientGrantTypes = pgTable(
     clientId: varchar("client_id")
       .references(() => clients.id, { onDelete: "cascade" })
       .notNull(),
-    grantType: varchar("grant_type", { length: 50 }), // authorization_code, refresh_token, client_credentials
+    grantType: varchar("grant_type", { length: 50 }).notNull(), // authorization_code, refresh_token, client_credentials
   },
   (t) => [unique().on(t.clientId, t.grantType)],
 );
